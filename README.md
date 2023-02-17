@@ -1,15 +1,15 @@
-# Haml2flex
+# Haml2phlex
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/haml2flex`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A haml 2 phlex converter. haml and phlex are both used to render ruby views. See [phlex here](https://phlex.fun)
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this to your application's Gemfile:
 
 ```ruby
-gem 'haml2flex'
+group :development do
+    gem 'haml2phlex'
+end
 ```
 
 And then execute:
@@ -18,11 +18,63 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install haml2flex
+    $ gem install haml2phlex
 
 ## Usage
 
-TODO: Write usage instructions here
+convert from HAML to Phlex.
+
+this is an imperfect string-parsing-based converter from HAML to Phlex on a subset of HAML functionality
+most commonly used.
+
+this means results still need to be touched up before they are actually usable. However - this will get
+rid of most the grunt work.
+
+use as so in the rails console to output to the command line so you can copy paste:
+```ruby
+x = Haml2phlex::Haml2flex.new('user_customizes/_show.html.haml', spacer: "\t", base_root: "app/views/")
+puts x.out
+```
+
+or to output to a corresponding file (in this case app/views/user_customizes/show.rb)
+```ruby
+x = Haml2phlex::Haml2flex.new('user_customizes/_show.html.haml', spacer: "\t", base_root: "app/views/")
+puts x.to_file
+```
+
+#EXAMPLE INPUT
+
+```haml
+ = form_for @user_customize do |f|
+ 	- if @user_customize.errors.any?
+ 		#error_explanation
+ 			%h2= "#{pluralize(@user_customize.errors.count, "error")} prohibited this user_customize from being saved:"
+ 			%ul
+ 				- @user_customize.errors.full_messages.each do |message|
+ 					%li= message
+
+ 	.actions
+ 		= f.submit 'Save'
+```
+#EXAMPLE OUTPUT
+
+```ruby
+form_for @user_customize do |f|
+    if @user_customize.errors.any?
+    	div(:id=>"error_explanation") {
+			h2() { "#{pluralize(@user_customize.errors.count, "error")} prohibited this user_customize from being saved:" } 
+			ul() {
+				@user_customize.errors.full_messages.each do |message|
+					li() { message } 
+				end
+			}
+		}
+	end
+	div(:class=>"actions") {
+		f.submit 'Save'
+	}
+end
+```
 
 ## Development
 
@@ -32,7 +84,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/haml2flex. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/haml2flex/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/LukeClancy/haml2flex. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/LukeClancy/haml2flex/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -40,4 +92,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Haml2flex project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/haml2flex/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Haml2flex project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/LukeClancy/haml2flex/blob/master/CODE_OF_CONDUCT.md).
