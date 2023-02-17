@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative "haml2phlex/version"
 
 module Haml2phlex
