@@ -221,7 +221,7 @@ class Haml2phlex
 	def out
 		self.hlines.map{|hl| hl.out}.join('')
 	end
-	def spit
+	def to_file
 		x = self.filename.split('/')
 		x[-1] = x[-1].split('.')[0]
 
