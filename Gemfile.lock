@@ -1,0 +1,19 @@
+PATH
+  remote: .
+  specs:
+    haml2phlex (0.1.4)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (13.0.6)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  haml2phlex!
+  rake (~> 13.0)
+
+BUNDLED WITH
+   2.3.7
