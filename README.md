@@ -42,7 +42,7 @@ x = Haml2phlex::Haml2flex.new('user_customizes/_show.html.haml', spacer: "\t", b
 puts x.to_file
 ```
 
-#EXAMPLE INPUT
+## Example Input
 
 ```haml
  = form_for @user_customize do |f|
@@ -56,7 +56,7 @@ puts x.to_file
  	.actions
  		= f.submit 'Save'
 ```
-#EXAMPLE OUTPUT
+## Example Output
 
 ```ruby
 form_for @user_customize do |f|
@@ -75,6 +75,20 @@ form_for @user_customize do |f|
 	}
 end
 ```
+
+## Options
+
+since 1.0.13 if you have a template method in your ApplicationView, the to_file function will acommidate that with a super do .... end.
+This lets you do something like the below in your ApplicationView.
+
+```ruby
+def template(&)
+	t = Time.now 
+	yield
+	Rails.logger.info "#{self.class.to_s} Phlex class took #{(Time.now - t) * 1000} ms"
+end
+```
+Needless to say, this is nice for comparing timing with previous haml implementations
 
 ## Development
 
