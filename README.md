@@ -36,7 +36,7 @@ x = Haml2phlex::Haml2flex.new('user_customizes/_show.html.haml', spacer: "\t", b
 puts x.out
 ```
 
-or to output to a corresponding file (in this case app/views/user_customizes/show.rb)
+or to output to a corresponding file with class definitions etc. (in this case app/views/user_customizes/show.rb)
 ```ruby
 x = Haml2phlex::Haml2flex.new('user_customizes/_show.html.haml', spacer: "\t", base_root: "app/views/")
 puts x.to_file
