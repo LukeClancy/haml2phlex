@@ -238,26 +238,35 @@ class Haml2phlex
 		rb_fname = self.base_root +  rb_fname + ".rb"
 		
 		f = File.open(rb_fname, 'w+')
+
+        super_the_template = ((defined?(Views::ApplicationView)) and (Views::ApplicationView.instance_methods.include?(:template)))
+
 		f.write %Q{
 module Views
-	class #{rb_class} < Phlex::HTML
-		include ApplicationView
+    class #{rb_class} < Phlex::HTML
+        include ApplicationView
 
-		def initialize(**args)
-			#sets whatever you put in as a instance variable
-			for k in args.keys
-				self.instance_variable_set("@\#{k}", args[k])
-			end
-		end
+        def initialize(**args)
+            #sets whatever you put in as a instance variable should prob delete and make optional arguments.
+            #it would be useful if we could automatically make every variable in the phlex output into class
+            #variables, then you wouldn't have to change nearly anything on conversion.
+            for k in args.keys
+                self.instance_variable_set("@\#{k}", args[k])
+            end
+        end
 
-		def template(&)
-			base_page(&)
-		end
+        def template(&)
+            #{'super do' if super_the_template}
+            #{"\t" if super_the_template}base_page(&)
+            #{'end' if super_the_template}
+        end
 
-		def base_page(&)
-			#{out}
-		end
-	end
+        def base_page(&)
+            #_______________________________________START
+#{out}
+            #_______________________________________END
+        end
+    end
 end}
 		f.close
 		puts 'written to ' + rb_fname
