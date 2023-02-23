@@ -2,6 +2,12 @@
 
 A haml 2 phlex converter. haml and phlex are both used to render ruby views. See [phlex here](https://phlex.fun)
 
+## Why Phlex?
+- less context switching between haml and ruby leads to easier onboarding and developer happiness
+- Much faster times as the ruby code gets JIT compiled
+- Less files that are more meaningful and organized through splitting the html components into functions.
+- Able to utilize Object Oriented Programming. When you need it, you need it.
+
 ## Installation
 
 Add this to your application's Gemfile:
